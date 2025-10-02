@@ -44,10 +44,9 @@ async def login_page():
 app.include_router(products.router)
 app.include_router(auth.router)
 
-# DB init - Only create tables, don't drop them in production
+# DB init - Only create tables if they don't exist
 @app.on_event("startup")
 async def on_startup():
-    # Only create tables if they don't exist
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-    print("Database tables ready!")
+    print("✅ Database tables ready!")
