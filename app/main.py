@@ -54,3 +54,10 @@ async def on_startup():
     except Exception as e:
         print(f"❌ Database initialization failed: {e}")
         raise
+
+@app.post("/reset-db")
+async def reset_database():
+    # This will recreate all tables
+    Base.metadata.drop_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
+    return {"message": "Database reset successfully"}
