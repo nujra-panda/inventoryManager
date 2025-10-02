@@ -1,83 +1,122 @@
-# Inventory Manager
+# FastAPI Auth API
 
-[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-Backend-brightgreen)](https://fastapi.tiangolo.com/)
-[![Netlify](https://img.shields.io/badge/Frontend-Netlify-orange)](https://www.netlify.com/)
-[![Railway](https://img.shields.io/badge/Backend-Railway-purple)](https://railway.app/)
-
-A full-stack **Inventory Management System** with user authentication, product management, and a simple web-based UI.  
-Built with **FastAPI** (backend) and **HTML, CSS, JS** (frontend).
-
----
+A production-ready FastAPI backend with JWT auth, robust password hashing (Argon2 primary, bcrypt fallback), SQL database support, and interactive API docs at /docs. Built for serverless deployment on Vercel.
 
 ## Features
-- **User Authentication** (login/logout, JWT-based sessions)  
-- **Product Management** (add, update, delete, view inventory)  
-- **Role-based Access** (secured routes for authenticated users)  
-- **Frontend**: Static HTML/CSS/JS UI  
-- **Backend**: REST API powered by FastAPI + SQLAlchemy  
-- **Deployment**:  
-  - Frontend → Netlify  
-  - Backend → Railway  
 
----
+- FastAPI with automatic OpenAPI schema and Swagger UI at /docs.
+- JWT authentication with secure password hashing and strict validation.
+- Argon2 primary hashing to avoid bcrypt’s 72‑byte limit; bcrypt fallback with manual truncation.
+- SQL database via SQLAlchemy/SQLModel; works with managed Postgres (Neon, Supabase, Railway).
+- Serverless-ready configuration and CORS setup for modern frontends.
 
-## Project Structure
-INVENTORYMANAGER/
-│── alembic/ # Database migrations
-│── app/ # Backend (FastAPI)
-│ ├── core/ # Security, JWT handling
-│ ├── db/ # Database models & base
-│ ├── routers/ # API routes (auth, products)
-│ ├── schemas/ # Pydantic schemas
-│ ├── services/ # Business logic
-│ └── main.py # FastAPI entrypoint
-│── static/ # Frontend (HTML, CSS, JS)
-│ ├── index.html
-│ ├── login.html
-│ ├── script.js
-│ ├── login.js
-│ └── style.css
-│── netlify.toml # Netlify config for frontend
-│── render.yaml # Railway config for backend
-│── requirements.txt # Python dependencies
-│── runtime.txt # Python runtime version
-│── LICENSE
-└── README.md
+## Tech Stack
 
-yaml
-Copy code
+- Python 3.10+, FastAPI, Pydantic
+- SQLAlchemy/SQLModel + Postgres
+- passlib + argon2-cffi (primary) and bcrypt (fallback)
+- Uvicorn for local development
 
----
+## Quick Start
 
-## Setup & Installation
+Prerequisites:
+- Python 3.10+ installed
+- A Postgres DATABASE_URL (Neon/Supabase/Railway recommended)
 
-### 1. Clone the repository
-```bash
-git clone https://github.com/your-username/InventoryManager.git
-cd InventoryManager
-2. Backend Setup (FastAPI + Railway)
-bash
-Copy code
-# Create and activate virtual environment
-python -m venv venv
-source venv/bin/activate   # macOS/Linux
-venv\Scripts\activate      # Windows
+Setup:
+1. Clone the repo and create a virtual environment.
+2. Install dependencies:
+   - pip install -r requirements.txt
+3. Set environment variables:
+   - DATABASE_URL
+   - SECRET_KEY
+   - CORS_ORIGINS (comma-separated, e.g., https://your-frontend.vercel.app,http://localhost:3000)
+4. Run locally:
+   - uvicorn app.main:app --reload
+   - Open http://localhost:8000/docs
 
-# Install dependencies
-pip install -r requirements.txt
+## Environment Variables
 
-# Run backend
-uvicorn app.main:app --reload
-Backend will run at: http://127.0.0.1:8000
+- DATABASE_URL: Postgres connection string (e.g., postgresql+psycopg://user:pass@host/db)
+- SECRET_KEY: JWT signing key (use a strong random value)
+- CORS_ORIGINS: Comma-separated list of allowed origins
 
-3. Frontend Setup (Netlify)
-Simply open static/index.html in your browser, or deploy the folder to Netlify.
+## Password Hashing
 
-Deployment
-Frontend (Netlify): Demo Link (if available)
+- Primary: Argon2 via passlib for robust hashing without bcrypt’s 72‑byte constraint.
+- Fallback: bcrypt with explicit 72‑byte truncation in both hash and verify paths.
+- Validation: Enforce password length (e.g., 8–64 chars) at the schema layer.
 
-Backend (Railway): API Link (if available)
+Rationale: Prevents runtime errors from long inputs and avoids backend compatibility issues.
 
-License
-This project is licensed under the MIT License
+## API Endpoints (Auth)
+
+- POST /auth/register: Create user with validated password, hashed securely.
+- POST /auth/login: Verify password and return JWT access token.
+- GET /users/me: Retrieve current user using Authorization: Bearer <token>.
+
+Full request/response models are documented in /docs.
+
+## Project Structure (example)
+
+- app/main.py — FastAPI app, middleware (CORS), router includes
+- app/routers/auth.py — register/login endpoints
+- app/models.py — SQLAlchemy/SQLModel models
+- app/schemas.py — Pydantic schemas and validations
+- app/core/security.py — CryptContext, hash/verify helpers (argon2 primary, bcrypt fallback)
+- api/index.py — Vercel entrypoint exporting the FastAPI app
+- vercel.json — Vercel function/runtime routing config
+- requirements.txt — pinned dependencies
+
+## Local Development
+
+- Create DB/migrations (Alembic recommended) or auto-create tables at startup if configured.
+- Start server: uvicorn app.main:app --reload
+- Run tests: pytest
+
+## Deployment (Vercel)
+
+1. Ensure api/index.py exports your FastAPI app, e.g.:
+   - from app.main import app as app
+2. vercel.json example:
+   - {
+     "functions": { "api/index.py": { "runtime": "python3.10" } },
+     "routes": [{ "src": "/(.*)", "dest": "/api/index.py" }]
+     }
+3. Set env vars in Vercel Project Settings:
+   - DATABASE_URL, SECRET_KEY, CORS_ORIGINS
+4. Use a managed Postgres (do not rely on local files in serverless).
+5. Deploy:
+   - vercel (preview)
+   - vercel --prod (production)
+
+Post-deploy checks:
+- Open /docs on the Vercel URL
+- Register a user (12–32 char password)
+- Login and call /users/me with the Bearer token
+
+## Security Notes
+
+- Prefer Argon2 as primary scheme; retain bcrypt for legacy compatibility (with 72‑byte truncation).
+- Validate inputs (email format, password length), and consider rate limiting auth routes.
+- Configure CORS to only trusted origins and serve over HTTPS.
+
+## Troubleshooting
+
+- If register/login returns 500:
+  - Check hashing configuration (Argon2 installed; bcrypt pinned).
+  - Ensure password length validation and 72‑byte truncation for bcrypt fallback.
+- If 401 on login:
+  - Verify hashing verify() path mirrors the hash truncation.
+  - Confirm JWT SECRET_KEY and algorithm match in creation and validation.
+
+## Roadmap
+
+- Refresh tokens and revocation
+- Email verification and password reset flows
+- CI via GitHub Actions (tests, lint, type-check)
+- Structured logging and metrics
+
+## License
+
+MIT
