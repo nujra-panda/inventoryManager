@@ -44,9 +44,14 @@ async def login_page():
 app.include_router(products.router)
 app.include_router(auth.router)
 
-# DB init - Only create tables if they don't exist
+# DB init
 @app.on_event("startup")
 async def on_startup():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-    print("✅ Database tables ready!")
+    try:
+        print("🔄 Starting database initialization...")
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+        print("✅ Database tables created successfully!")
+    except Exception as e:
+        print(f"❌ Database initialization failed: {e}")
+        raise
