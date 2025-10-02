@@ -1,6 +1,6 @@
 // static/script.js
 
-const API_BASE = "inventory-backend-production-2a33.up.railway.app";
+const API_BASE = "https://inventory-backend-production-2a33.up.railway.app";
 const baseURL = `${API_BASE}/products`;
 
 // Redirect to login if no token
