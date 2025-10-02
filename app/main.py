@@ -19,13 +19,12 @@ app = FastAPI(title=APP_TITLE)
 # Static assets
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
-# CORS (wide-open for local dev)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
-        "https://your-netlify-app.netlify.app",
-        "*"  
+        "https://graceful-axolotl-73a518.netlify.app",  # Your actual Netlify URL
+        "*"  # Temporary - we'll fix this later
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -45,8 +44,10 @@ async def login_page():
 app.include_router(products.router)
 app.include_router(auth.router)
 
-# DB init
+# DB init - Only create tables, don't drop them in production
 @app.on_event("startup")
 async def on_startup():
+    # Only create tables if they don't exist
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+    print("Database tables ready!")
