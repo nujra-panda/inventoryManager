@@ -1,0 +1,16 @@
+[build]
+  publish = "static"
+  command = "echo 'No build needed'"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/login"
+  to = "/login.html"
+  status = 200
+
+[build.environment]
+  NODE_ENV = "production"

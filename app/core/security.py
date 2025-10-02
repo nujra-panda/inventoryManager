@@ -3,6 +3,10 @@ from typing import Optional
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 import os
+from dotenv import load_dotenv  # Add this import
+
+# Load environment variables from .env file
+load_dotenv()  # Add this line
 
 SECRET_KEY = os.getenv("SECRET_KEY", "CHANGE_ME")  # set env in prod
 ALGORITHM = "HS256"

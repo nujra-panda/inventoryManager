@@ -1,4 +1,12 @@
 # -----------------------------
+# Environment variables
+# -----------------------------
+.env
+.env.local
+.env.production
+.env.development
+
+# -----------------------------
 # Python
 # -----------------------------
 __pycache__/
@@ -13,7 +21,6 @@ __pycache__/
 # -----------------------------
 env/
 venv/
-.env
 .conda/
 *.sqlite3
 *.db
@@ -54,4 +61,3 @@ build/
 *.css~
 *.js~
 __pycache__/frontend/
-
