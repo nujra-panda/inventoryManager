@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="theme-color" content="#0f172a">
+  <title>Sign in · Inventory</title>
+  <link rel="icon" type="image/png" href="/static/favicon.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/static/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="page container" style="margin-top:60px">
+    <section class="card" style="max-width:720px; margin:0 auto;">
+      <div class="card-header">
+        <h2 class="card-title">Sign in</h2>
+        <span class="hint">Use the registered email</span>
+      </div>
+      <div class="form-row login-grid">
+        <input type="email" id="loginEmail" class="input" placeholder="Email">
+        <input type="password" id="loginPassword" class="input" placeholder="Password">
+        <button class="btn primary" id="loginBtn">Login</button>
+        <button class="btn ghost" id="registerBtn">Register</button>
+      </div>
+    </section>
+    <div id="notification" class="toast" role="status" aria-live="polite"></div>
+  </div>
+  <script src="/static/login.js"></script>
+</body>
+</html>

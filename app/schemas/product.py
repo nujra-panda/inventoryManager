@@ -1,18 +1,22 @@
 from pydantic import BaseModel
+from datetime import datetime
 
-class ProductCreate(BaseModel):
+class ProductBase(BaseModel):
     name: str
-    stock: int = 0
+    stock: int
+
+class ProductCreate(ProductBase):
+    pass
 
 class ProductUpdate(BaseModel):
-    stock: int
-    version: int  # Required for optimistic concurrency
-
-class ProductOut(BaseModel):
-    id: int
-    name: str
-    stock: int
+    stock: int | None = None
     version: int
 
+class ProductOut(ProductBase):
+    id: int
+    version: int
+    created_at: datetime
+    updated_at: datetime
+
     class Config:
-        orm_mode = True
+        from_attributes = True

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f172a">
+  <title>Inventory Tracker</title>
+  <link rel="icon" type="image/png" href="/static/favicon.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/static/favicon.png">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="page">
+    <header class="navbar">
+      <div class="brand">
+        <span class="logo-dot"></span>
+        <span>Inventory Tracker</span>
+      </div>
+      <div>
+        <button class="btn ghost" id="logoutBtn" onclick="logout()">Logout</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <div id="notification" class="toast" role="status" aria-live="polite"></div>
+
+      <!-- Sample data panel (optional learning) -->
+      <section class="card">
+        <div class="card-header">
+          <h2 class="card-title">Sample data</h2>
+          <span class="hint">Import 10 demo items from a public API</span>
+        </div>
+        <div class="form-row" style="grid-template-columns: 1fr 160px 160px;">
+          <select id="sampleSource" class="input">
+            <option value="pokemon">PokéAPI (Pokémon)</option>
+            <option value="books">RM (Rick and Morty Characters)</option>
+          </select>
+          <button class="btn ghost" id="sampleSpinner" style="display:none;">Loading…</button>
+          <button class="btn primary" onclick="seedSample()">Seed 10 items</button>
+        </div>
+      </section>
+
+      <!-- Add product -->
+      <section class="card">
+        <h2 class="card-title">Add Product</h2>
+        <div class="form-row">
+          <input type="text" id="productName" placeholder="Product name" class="input">
+          <input type="number" id="productStock" placeholder="Initial stock" class="input">
+          <button class="btn primary" onclick="addProduct()">Add</button>
+        </div>
+      </section>
+
+      <!-- Products -->
+      <section class="card">
+        <div class="card-header">
+          <h2 class="card-title">Products</h2>
+          <div style="display:flex; align-items:center; gap:10px;">
+          <span class="hint">Low stock items are highlighted</span>
+          <button class="btn ghost" onclick="exportCSV()">Export CSV</button>
+        </div>
+      </div>
+
+        <!-- Loading skeleton container -->
+        <ul id="productSkeleton" class="list" aria-hidden="true" style="display:none;"></ul>
+
+        <!-- Empty state -->
+        <div id="emptyState" class="empty" style="display:none;">
+          <div>No products yet.</div>
+          <div class="empty-actions">
+            <button class="btn primary" onclick="addSampleProduct()">Add sample product</button>
+          </div>
+        </div>
+
+        <!-- Real list -->
+        <ul id="productList" class="list"></ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Built with FastAPI</span>
+    </footer>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
