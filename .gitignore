@@ -1,0 +1,57 @@
+# -----------------------------
+# Python
+# -----------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pym
+*.pyi
+
+# -----------------------------
+# Virtual environment / Conda
+# -----------------------------
+env/
+venv/
+.env
+.conda/
+*.sqlite3
+*.db
+
+# -----------------------------
+# Logs and temporary files
+# -----------------------------
+*.log
+*.tmp
+*.bak
+
+# -----------------------------
+# Editor / IDE
+# -----------------------------
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# -----------------------------
+# OS files
+# -----------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# -----------------------------
+# Frontend / Node (if ever used)
+# -----------------------------
+node_modules/
+dist/
+build/
+
+# -----------------------------
+# FastAPI / Templates / Static
+# -----------------------------
+*.html~
+*.css~
+*.js~
+__pycache__/frontend/
+
