@@ -17,8 +17,13 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 def verify_password(plain: str, hashed: str) -> bool:
     return pwd_context.verify(plain, hashed)
 
-def hash_password(plain: str) -> str:
-    return pwd_context.hash(plain)
+def hash_password(plain_password: str) -> str:
+    # Truncate password to 72 bytes to avoid bcrypt limitation
+    if len(plain_password.encode('utf-8')) > 72:
+        # Truncate to 72 bytes, being careful with UTF-8 characters
+        truncated = plain_password.encode('utf-8')[:72].decode('utf-8', 'ignore')
+        return pwd_context.hash(truncated)
+    return pwd_context.hash(plain_password)
 
 def create_access_token(sub: str, minutes: int = ACCESS_TOKEN_EXPIRE_MINUTES) -> str:
     exp = datetime.now(timezone.utc) + timedelta(minutes=minutes)
