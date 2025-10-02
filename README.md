@@ -80,26 +80,15 @@ A robust FastAPI backend for an inventory management system, featuring secure JW
 
 ### Backend on Railway
 
-1.  Create a new project on Railway and link it to your GitHub repository.
-2.  Add a **Postgres** database service. Railway will automatically provide the `DATABASE_URL`.
-3.  In your service settings, add `SECRET_KEY` and `CORS_ORIGINS` as environment variables.
-4.  Set the start command to:
-    ```bash
-    uvicorn app.main:app --host 0.0.0.0 --port $PORT
-    ```
-5.  Railway will automatically deploy your application upon pushing to the main branch.
+    https://inventory-backend-production-2a33.up.railway.app/docs
 
 ### Frontend on Netlify
 
-1.  Connect your GitHub repository to Netlify.
-2.  Set the **Publish directory** to `static`.
-3.  Leave the **Build command** empty.
-4.  Deploy the site.
-5.  Remember to add your Netlify site URL to the `CORS_ORIGINS` variable in your Railway backend settings.
+    https://graceful-axolotl-73a518.netlify.app/
 
 ---
 
-## 🛣️ Roadmap
+## 🛣️ Things left to do
 
 -   [ ] Implement refresh tokens for extended sessions.
 -   [ ] Add role-based access control (Admin vs. User).
