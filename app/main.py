@@ -22,9 +22,8 @@ app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000",
-        "https://graceful-axolotl-73a518.netlify.app",  # Your actual Netlify URL
-        "*"  # Temporary - we'll fix this later
+        "http://localhost:3000",  # For local development
+        "https://graceful-axolotl-73a518.netlify.app"  # Your Netlify domain
     ],
     allow_credentials=True,
     allow_methods=["*"],

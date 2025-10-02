@@ -1,4 +1,4 @@
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = "https://inventory-backend-production-2a33.up.railway.app/";
 const notificationEl = document.getElementById("notification");
 let toastTimer=null;
 function toast(msg,type="success",ms=2200){
