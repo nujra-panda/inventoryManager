@@ -22,7 +22,12 @@ app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 # CORS (wide-open for local dev)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://your-netlify-app.netlify.app",
+        "*"  
+    ],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
