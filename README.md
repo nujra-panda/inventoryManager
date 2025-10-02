@@ -11,6 +11,7 @@ A robust FastAPI backend for an inventory management system, featuring secure JW
 -   **Advanced Password Hashing:** Uses **Argon2** as the primary hashing algorithm with a **bcrypt** fallback for maximum security.
 -   **Database Integration:** Built with SQLAlchemy and SQLModel for easy interaction with a Postgres database.
 -   **Full CRUD Functionality:** Complete Create, Read, Update, and Delete operations for inventory products.
+-   **CSV Export:** Download a complete report of the current inventory as a `.csv` file.
 -   **Clean Architecture:** Organized code with distinct routers, schemas, and services.
 
 ---
@@ -73,6 +74,7 @@ A robust FastAPI backend for an inventory management system, featuring secure JW
 -   `POST /products`: Add a new product to the inventory.
 -   `PUT /products/{id}`: Update an existing product by its ID.
 -   `DELETE /products/{id}`: Delete a product by its ID.
+-   `GET /products/report`: Downloads a CSV report of the entire product inventory.
 
 ---
 
@@ -80,11 +82,11 @@ A robust FastAPI backend for an inventory management system, featuring secure JW
 
 ### Backend on Railway
 
-    https://inventory-backend-production-2a33.up.railway.app/docs
+https://inventory-backend-production-2a33.up.railway.app/docs
 
 ### Frontend on Netlify
 
-    https://graceful-axolotl-73a518.netlify.app/
+https://graceful-axolotl-73a518.netlify.app/
 
 ---
 
