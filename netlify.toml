@@ -2,14 +2,9 @@
   publish = "static"
   command = "echo 'No build needed'"
 
-# Explicitly disable Python build
 [build.environment]
   NODE_ENV = "production"
-  PYTHON_VERSION = "3.9"  # Use a version Netlify supports
-
-# Or better yet, force Node.js environment
-[context.production.environment]
-  NODE_VERSION = "18"
+  PYTHON_VERSION = "3.9"  # Netlify supports 3.7, 3.8, 3.9, 3.10
 
 [[redirects]]
   from = "/*"
