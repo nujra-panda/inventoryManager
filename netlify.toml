@@ -4,7 +4,7 @@
 
 [build.environment]
   NODE_ENV = "production"
-  PYTHON_VERSION = "3.9"  # Netlify supports 3.7, 3.8, 3.9, 3.10
+  PYTHON_VERSION = "3.9"  
 
 [[redirects]]
   from = "/*"
