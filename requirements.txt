@@ -7,5 +7,5 @@ passlib[bcrypt]==1.7.4
 python-dotenv==1.0.0
 aiofiles==23.2.1
 aiosqlite==0.19.0
-email-validator==2.1.0  # Add this line
+email-validator==2.1.0  
 bcrypt==4.0.1
